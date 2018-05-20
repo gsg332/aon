@@ -1,0 +1,116 @@
+######################################################
+ AWS 서버 정보
+
+ DISTRIB_ID=Ubuntu
+ DISTRIB_RELEASE=16.04
+ DISTRIB_CODENAME=xenial
+ DISTRIB_DESCRIPTION="Ubuntu 16.04 LTS"
+ NAME="Ubuntu"
+ VERSION="16.04 LTS (Xenial Xerus)"
+ ID=ubuntu
+ ID_LIKE=debian
+ PRETTY_NAME="Ubuntu 16.04 LTS"
+ VERSION_ID="16.04"
+ HOME_URL="http://www.ubuntu.com/"
+ SUPPORT_URL="http://help.ubuntu.com/"
+ BUG_REPORT_URL="http://bugs.launchpad.net/ubuntu/"
+ UBUNTU_CODENAME=xenial
+
+######################################################
+
+1. 웹 접근
+ - url : aws.amazon.com
+ - 계정 : minkus@aonkorea.com / aonreit_2016
+
+2. key 파일
+ - aon_it.pem
+
+3. 공인 IP
+ - 52.25.92.232
+
+4. putty 접속
+ 4.1 key 생성
+  - puttygen 실행
+  - Load 클릭하여 aon_it.pem 파일 선택
+  - Type of key to generate : SSH-2 RSA 선택
+  - Number of bits in a generated key : 2048
+  - Save private key 클릭하여 aon_it.ppk key파일 생성
+
+ 4.2 접속
+  - Session 정보
+    Host Name : 52.25.92.232
+    Port : 22
+    Connection type : SSH
+
+  - Connection > SSH > Auth
+    Private key file for authentication 항목에 생성된 ppk 키파일 선택
+
+  - 연결버튼 클릭
+
+  - 계정 : ubuntu / 1234qwer
+    root 계정 : root / 1234qwer
+
+5. FTP 접속 (FileZilla 기준)
+ 5.1 key 등록
+  - 편집 > 설정 > SFTP > Add key file 클릭하여 key파일 등록
+  - 호스트 : 52.25.92.232
+    사용자명 : ubuntu
+    비밀번호 : 1234qwer
+    포트 : 22
+
+######################################################
+ Tomcat 정보
+######################################################
+1. 설치 경로
+ - gowhatinfo 실행 시 tomcat 경로로 이동
+ - /usr/local/tomcat/tomcat-whatinfo
+
+2. 서비스
+ - 실행 : /usr/local/tomcat/tomcat-whatinfo/bin/startup.sh
+ - 정지 : /usr/local/tomcat/tomcat-whatinfo/bin/shutdown.sh
+ - 로그 : /usr/local/tomcat/tomcat-whatinfo/logs/catalina.out
+          logwhatinfo 실행 시 로그파일에 대한 tail 명령문 자동 실행
+ - catalina.sh 설정
+   export CATALINA_OPTS="-Xms1024m -Xmx1024m -Djava.net.preferIPv4Stack=true -Dspring.profiles.active=prod" 적용됨
+  
+3. 소스배포
+ - build 실행하여 생성된 whatinfo-버전.war 파일명을 ROOT.war 로 변경
+ - 서비스 정지
+ - /usr/local/tomcat/tomcat-whatinfo/webapps/ 하위로 복사
+ - ROOT 폴더 삭제 (rm -rf ROOT)
+ - 서비스 실행
+
+######################################################
+ Apache2 정보
+###################################################### 
+1. 설치 경로 
+ - /etc/apache2
+ 
+2. 서비스
+ - 실행 : service apache2 start
+ - 정지 : service apache2 stop
+ - 재시작 : service apache2 restart
+
+3. 설정
+ 3.1 mod_jk 설정
+  - vi /etc/libapache2-mod-jk/workers.properties
+  	톰캣 설치 경로와 jdk 설치 경로 설정
+ 
+ 3.2 apache 설정
+  - vi /etc/apache2/sites-enabled/000-default.conf
+    ServerAdmin webmaster@localhost
+	DocumentRoot /usr/local/tomcat/tomcat-whatinfo/webapps/ROOT
+	
+	JkMount /* ajp13_worker <-- 추가시 apache 실행 오류로 인해 주석처리함
+	JkMount / ajp13_worker <-- 추가시 apache 실행 오류로 인해 주석처리함
+
+######################################################
+ MariaDB 정보
+###################################################### 
+1. 터미널 접속
+ - mysql -u root -p
+2. 접속 정보
+ - jdbc.driver : org.mariadb.jdbc.Driver
+ - jdbc.url : jdbc:mariadb://52.25.92.232:3306/whatinfo
+ - jdbc.username : whatinfo
+ - jdbc.password : 1234qwer

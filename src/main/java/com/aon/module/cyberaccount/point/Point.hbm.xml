@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-lazy="false">
+	<class name="com.aon.module.cyberaccount.point.Point" table="pt_point">
+		<id name="id" column="point_id" type="java.lang.Long">
+			<generator class="native"/>
+		</id>
+		<property name="type" column="type" type="int" />
+		<property name="sourceId" column="source_id" type="java.lang.Long" />
+		<property name="point" column="point" type="java.lang.Long" />
+		<property name="balance" column="balance" type="java.lang.Long" />
+		<property name="insertDate" column="insert_date" type="java.util.Date" />
+		<property name="cyberAccId" column="cyber_acc_id" type="java.lang.Long" />
+	</class>
+</hibernate-mapping>

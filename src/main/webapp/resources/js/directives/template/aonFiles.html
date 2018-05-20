@@ -1,0 +1,21 @@
+<div class="form-grup">
+  <label for="{{fieldName}}">{{label}}</label>
+    <div>
+      <table style="padding:0;width:100%;table-layout:fixed;">
+ 		<tr>
+   	 	  <td width="*">
+   	 	  	<select multiple class="form-control" id="{{fieldName}}"></select>
+   	 	  </td>
+   	 	  <td width="94px" valign="top">
+       	 	 <div class="file_input_div" id="{{fieldName}}File">
+       	 	  	<button type="button" class="file_input_button">{{insertButtonLabel}}</button>
+       	 	  	<input type="file" class="file_input_hidden" onclick="angular.element(this).scope().files.doClickFile()"
+ 					onchange="angular.element(this).scope().files.doAddFile(this)"/>
+  			</div>
+  			<button  type="button" onclick="angular.element(this).scope().files.doDelete();" 
+	    		style="width:90px;border:none;font-size:12px;height:16px;margin-left:2px;">{{deleteButtonLabel}}</button>	           	 
+ 		 </td>
+     </tr>
+   </table>
+  </div>
+ </div>

@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-lazy="false">
+	<class name="com.aon.sys.schedule.log.SysLog" table="sa_log">
+		<id name="id" column="log_id" type="java.lang.Long">
+			<generator class="native"/>
+		</id>
+		<property name="name" column="schedule_name" type="string"/>
+		<property name="param" column="param" type="string"/>
+		<property name="insertDate" column="insert_date" type="java.util.Date"/>
+		<property name="result" column="result" type="boolean"/>
+		<property name="detail" column="result_detail" type="string"/>
+		<property name="ip" column="ip" type="long"/>
+	</class>
+</hibernate-mapping>

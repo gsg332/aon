@@ -1,0 +1,1 @@
+<Resource auth="Container" defaultAutoCommit="false" driverClassName="org.mariadb.jdbc.Driver" factory="org.apache.tomcat.jdbc.pool.DataSourceFactory" initialSize="3" maxActive="10" maxWait="100" minIdle="10" name="jdbc/aon" password="dhktdlsvhelql!!" type="javax.sql.DataSource" url="jdbc:mysql://10.1.1.187/whatinfo" username="whatinfo"/>

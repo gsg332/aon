@@ -1,0 +1,8 @@
+/build/
+/.gradle/
+/.settings/
+/bin/
+/src/main/webapp/WEB-INF/classes/
+/src/main/generated-sources/
+/.DS_Store
+/.classpath

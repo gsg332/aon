@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-lazy="false">
+	<class name="com.aon.module.contest.report.Report" table="qa_item_report">
+		<id name="id" column="report_id" type="java.lang.Long">
+			<generator class="native" />
+		</id>
+		<property name="qaId" column="qa_id"  type="java.lang.Long" />
+		<component name="reportUser" class="com.aon.sys.usr.User">
+			<property name="memberId" column="member_id" type="java.lang.Long" />
+			<property name="displayName" column="member_display_name"	type="string" />
+		</component>
+		<property name="content" column="content" type="string" />
+		<property name="insertDate" column="insert_date" type="java.util.Date" />
+		<property name="confirmDate" column="confirm_date" type="java.util.Date" />
+		<property name="confirm" column="is_confirm" type="boolean" />
+		<component name="adminUser" class="com.aon.sys.usr.User">
+			<property name="memberId" column="admin_id" type="java.lang.Long" />
+			<property name="displayName" column="admin_display_name" type="string" />
+		</component>
+		<property name="adminComment" column="admin_comment" type="string" />
+	</class>
+</hibernate-mapping>

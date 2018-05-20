@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-lazy="false">
+
+	<class name="com.aon.sys.member.Member" table="hr_member">
+		<id name="id" column="member_id" type="java.lang.Long">
+			<generator class="native" />
+		</id>
+		<version name="version" column="version" type="int"/>
+		<property name="type" column="type" type="string"/>
+		<property name="loginId" column="loginid" type="string"/>
+		<property name="nickname" column="nickname" type="string"/>
+		<property name="password" column="password" type="string"/>
+		<property name="firstName" column="first_name" type="string" not-null="true"/>
+		<property name="lastName" column="last_name" type="string" not-null="true"/>
+		<property name="countryCode" column="country_code" type="string" not-null="true"/>
+		<property name="address" column="address" type="string" not-null="true"/>
+		<property name="phoneCountryCode" column="phone_country_code" type="string" not-null="true"/>
+		<property name="phoneNumber" column="phone_number" type="string" not-null="true"/>
+		<property name="cellPhoneCountryCode" column="cell_phone_country_code" type="string" not-null="true"/>
+		<property name="cellPhoneNumber" column="cell_phone_number" type="string" not-null="true"/>
+		<property name="sms" column="is_sms" type="boolean" not-null="true"/>
+		<property name="male" column="is_male" type="boolean" not-null="true"/>
+		<property name="email" column="email" type="string"/>
+		<property name="status" column="status" type="int"/>
+		<property name="companyName" column="company_name" type="string"/>
+		<property name="companyNumber" column="company_number" type="string"/>
+		<property name="insertDate" column="insert_date" type="java.util.Date"/>
+		<property name="dropoutDate" column="dropout_date" type="java.util.Date" not-null="true"/>
+		<property name="dropoutReason" column="dropout_reason" type="string" not-null="true"/>
+		<property name="adminComment" column="admin_comment" type="string" not-null="true"/>
+		<property name="admin" column="is_admin" type="boolean"/>
+		<property name="totalAccessCnt" column="total_access_cnt" type="java.lang.Long" />
+		<property name="lastAccessIp" column="last_access_ip" type="java.lang.Long" />
+		<property name="lastAccessDate" column="last_access_date" type="java.util.Date" />
+		<property name="questionCnt" column="question_cnt" type="java.lang.Long" />
+		<property name="answerCnt" column="answer_cnt" type="java.lang.Long" />
+		
+		<list name="categories" table="hr_category" lazy="true">
+			<key column="member_id"/>
+			<index column="sort_order"/>
+			<composite-element class="com.aon.sys.member.Member$Category">
+				<property name="categoryId" column="category_id" type="java.lang.Long"/>
+				<property name="level1" column="level1" type="java.lang.Long"/>
+				<property name="level2" column="level2" type="java.lang.Long"/>
+				<property name="level3" column="level3" type="java.lang.Long"/>
+				<property name="level4" column="level4" type="java.lang.Long"/>
+				<property name="tag" column="tag" type="string"/>
+			</composite-element>
+		</list>
+		
+		<one-to-one name="memberProfile" class="com.aon.sys.member.Member$MemberProfile" cascade="all" />
+	</class>
+	 
+	<class name="com.aon.sys.member.Member$MemberProfile" table="hr_profile">
+        <id name="id" type="java.lang.Long">
+            <column name="member_id"></column>
+            <generator class="foreign">
+                <param name="property">member</param>
+            </generator>
+        </id>
+        <property name="profileTitle" column="profile_title" type="string" not-null="true" length="100"/>
+        <property name="open" column="is_open" type="boolean" not-null="true" length="100"/>
+        <property name="career" column="career" type="string" not-null="true" length="2000"/>
+        <property name="introduce" column="introduce" type="string" not-null="true" length="500"/>
+         <component name="image" class="com.aon.sys.upload.Upload">
+			<property name="path" column="save_path" type="string" />
+			<property name="type" column="save_code" type="integer" />
+		</component>
+        <one-to-one name="member" class="com.aon.sys.member.Member" cascade="all"/>
+    </class>
+	
+	<class name="com.aon.sys.member.Member$Access" table="hr_access">
+		<id name="id" column="access_id" type="java.lang.Long">
+			<generator class="native" />
+		</id>
+		<property name="ip" column="ip" type="java.lang.Long" not-null="true" />
+		<property name="insertDate" column="insert_date" type="java.util.Date" />
+		<property name="memberId" column="member_id" type="java.lang.Long" not-null="true" />
+	</class>
+	
+	<class name="com.aon.sys.member.confirm.Confirm" table="hr_confirm">
+		<id name="id" column="confirm_id" type="java.lang.Long">
+			<generator class="native" />
+		</id>
+		<property name="loginId" column="loginid" type="string"/>
+		<property name="confirmCode" column="confirm_code" type="string"/>
+		<property name="insertDate" column="insert_date" type="java.util.Date" />
+	</class>
+</hibernate-mapping>

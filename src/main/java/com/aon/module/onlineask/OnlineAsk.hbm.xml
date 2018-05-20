@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-lazy="false">
+	<class	name="com.aon.module.onlineask.OnlineAsk" table="cm_inquiry">
+		<id name="id" column="inquiry_id" type="java.lang.Long">
+			<generator class="native"/>
+		</id>
+		<property name="userName" column="user_name" type="string"/>
+		<property name="loginid" column="loginid" type="string"/>		
+	    <property name="insertDate" column="insert_date" type="java.util.Date"/>
+	   	<property name="updateDate" column="update_date" type="java.util.Date"/>
+		<property name="email" column="email" type="string"/>	
+		<property name="content" column="content" type="text"/>
+		<property name="adminComment" column="admin_comment" type="string"/>
+		<property name="status" column="status" type="int"/>
+		<property name="adminId" column="admin_id" type="java.lang.Long"/>
+	</class>
+</hibernate-mapping>        

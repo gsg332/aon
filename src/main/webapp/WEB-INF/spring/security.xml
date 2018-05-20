@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:security="http://www.springframework.org/schema/security"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+    xmlns:task="http://www.springframework.org/schema/task"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    	http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.2.xsd
+    	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+    	http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.8.xsd
+        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+ 
+ 	<context:component-scan base-package="com.aon.lib.event,com.aon.sys.login,com.aon.sys.upload,com.aon.sys.member
+ 	,com.aon.doc.file,com.aon.sys.category,com.aon.sys.certify.sms" />
+ 	
+ 	<bean id="cyberAccountService" class="com.aon.module.cyberaccount.CyberAccountService"/>
+ 	<bean id="pointQuery" class="com.aon.module.cyberaccount.point.PointQuery"/>
+ 	<bean id="contestService" class="com.aon.module.contest.ContestService"/>
+ 	<bean id="contestQuery" class="com.aon.module.contest.ContestQuery"/>
+
+ 	<security:http pattern="/resources/**" security="none"/>
+ 	<security:http pattern="/external/**" security="none"/>
+ 	 
+ 	<security:http pattern="/supervisor/**" auto-config="true" disable-url-rewriting="true" use-expressions="true"	create-session="ifRequired" authentication-manager-ref="supervisorLogin">
+		<security:intercept-url pattern="/supervisor/sys/login/**" access="permitAll" requires-channel="https" />
+		<security:intercept-url pattern="/**" access="hasRole('ROLE_ADMIN')" requires-channel="https"/>
+		<!-- 
+		<security:port-mappings>
+            <security:port-mapping http="8080" https="8443" />
+        </security:port-mappings>
+         -->
+		<security:remember-me key="supervisorAonCookie" use-secure-cookie="true" remember-me-parameter="true" token-validity-seconds="2419200" user-service-ref="supervisorLoginService"/><!-- 4 주 세션 유지 -->
+		<security:session-management session-fixation-protection="none">
+            <security:concurrency-control max-sessions="1" />
+        </security:session-management>
+        <security:form-login
+            login-page="/supervisor/sys/login/loginForm.aon"
+            always-use-default-target="false"
+            authentication-success-handler-ref="supervisorLoginSuccessHandler"
+            authentication-failure-handler-ref="supervisorLoginFailHandler"
+            login-processing-url="/supervisor/securityLogin"
+            username-parameter="loginId"
+            password-parameter="password"    
+        />
+        <!-- 
+		<security:logout logout-url="/supervisor/securityLogout" logout-success-url="/supervisor/sys/login/loginForm.aon" invalidate-session="true" delete-cookies="supervisorAonCookie" />
+		 -->
+		<security:csrf disabled="false" />
+	</security:http>
+	
+	
+	<!-- supervisor 와 system 합치기  -->
+	<security:http pattern="/system/**" auto-config="true" disable-url-rewriting="true" use-expressions="true"	create-session="ifRequired" authentication-manager-ref="supervisorLogin">
+		<security:intercept-url pattern="/supervisor/sys/login/**" access="permitAll" requires-channel="https" />
+		<security:intercept-url pattern="/**" access="hasRole('ROLE_ADMIN')" requires-channel="https"/>
+		<!-- 
+		<security:port-mappings>
+            <security:port-mapping http="8080" https="8443" />
+        </security:port-mappings>
+         -->
+		<security:remember-me key="supervisorAonCookie" use-secure-cookie="true" remember-me-parameter="true" token-validity-seconds="2419200" user-service-ref="supervisorLoginService"/><!-- 4 주 세션 유지 -->
+		<security:session-management session-fixation-protection="none">
+            <security:concurrency-control max-sessions="1" />
+        </security:session-management>
+        <security:form-login
+            login-page="/supervisor/sys/login/loginForm.aon"
+            always-use-default-target="false"
+            authentication-success-handler-ref="supervisorLoginSuccessHandler"
+            authentication-failure-handler-ref="supervisorLoginFailHandler"
+            login-processing-url="/supervisor/securityLogin"
+            username-parameter="loginId"
+            password-parameter="password"    
+        />
+        <!-- 
+		<security:logout logout-url="/supervisor/securityLogout" logout-success-url="/supervisor/sys/login/loginForm.aon" invalidate-session="true" delete-cookies="supervisorAonCookie" />
+		 -->
+		<security:csrf disabled="false" />
+	</security:http>
+	<!-- supervisor 와 system 합치기  -->
+	
+	<security:authentication-manager id="supervisorLogin">
+		<security:authentication-provider user-service-ref="supervisorLoginService">
+			<security:password-encoder base64="false" hash="sha-256" />
+		</security:authentication-provider>
+	</security:authentication-manager>
+	
+ 	<security:http pattern="/**" auto-config="true" disable-url-rewriting="true" use-expressions="true"	create-session="ifRequired" authentication-manager-ref="userLogin">
+		<security:intercept-url pattern="/module/doc/write.aon" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" requires-channel="https" />
+		<security:intercept-url pattern="/module/doc/edit.aon" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" requires-channel="https" />
+		<security:intercept-url pattern="/module/doc/delete.json" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" requires-channel="https" />
+		<security:intercept-url pattern="/module/doc/readForUpdate.json" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" requires-channel="https" />
+		<security:intercept-url pattern="/module/doc/update.json" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" requires-channel="https" />
+		<security:intercept-url pattern="/module/contest/write.aon" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" requires-channel="https" />
+		<security:intercept-url pattern="/module/contest/view.aon" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" requires-channel="https" />
+		<security:intercept-url pattern="/myPage/**" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" requires-channel="https" />
+		<security:intercept-url pattern="/module/cyberAccount/**" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" requires-channel="https" />
+		<security:intercept-url pattern="/module/deposit/**" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" requires-channel="https" />
+		<security:intercept-url pattern="/module/withdraw/**" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" requires-channel="https" />
+		<security:intercept-url pattern="/module/doc/**" access="permitAll" requires-channel="https" />
+		<security:intercept-url pattern="/**" access="permitAll" requires-channel="https" />
+		<!-- 
+		<security:port-mappings>
+            <security:port-mapping http="8080" https="8443" />
+        </security:port-mappings>
+         -->
+		<security:remember-me key="aonCookie" use-secure-cookie="true" remember-me-parameter="true" token-validity-seconds="2419200" user-service-ref="loginService"/><!-- 4 주 세션 유지 -->
+		<security:session-management session-fixation-protection="none">
+            <security:concurrency-control max-sessions="1" />
+        </security:session-management>
+        <security:form-login
+            login-page="/sys/login/login.aon" 
+            always-use-default-target="false"
+            authentication-success-handler-ref="loginSuccessHandler"
+            authentication-failure-handler-ref="loginFailHandler"
+            login-processing-url="/securityLogin"
+            username-parameter="loginId"
+            password-parameter="password"    
+        />
+        <!-- 
+		<security:logout logout-url="/securityLogout" logout-success-url="/index.aon" invalidate-session="true" delete-cookies="aonCookie" />
+		 -->
+		<security:csrf disabled="false" />
+	</security:http>
+	<security:user-service>
+		<security:user name="user" password="password" authorities="ROLE_USER" />
+	</security:user-service>
+	
+	<security:authentication-manager id="userLogin">
+		<security:authentication-provider user-service-ref="loginService">
+			<security:password-encoder base64="false" hash="sha-256" />
+		</security:authentication-provider>
+	</security:authentication-manager>
+
+</beans>

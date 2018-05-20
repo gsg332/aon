@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-lazy="false">
+	<class name="com.aon.sys.conf.Config" table="sa_config">
+		<id name="key" column="code" type="string">
+			<generator class="assigned"/>
+		</id>
+		<property name="value" column="value" type="string"/>
+	</class>
+	<query name="com.aon.sys.conf.findAll"><![CDATA[
+		FROM Config 
+	]]></query>
+</hibernate-mapping>

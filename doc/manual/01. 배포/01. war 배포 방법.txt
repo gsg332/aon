@@ -1,0 +1,17 @@
+0. 빌드 시, 프로젝트가 참조하는 jre 라이브러리를 jdk 설치 경로의 jre 라이브러리를 참조하도록 적용
+1. 프로젝트 마우스 우 클릭
+2. Run As -> Maven Install 클릭
+ - target 폴더에 artifactId-version.packaging 파일이 생성됨
+   ex) buyinfo-1.0.0.war
+3. 생성된 war 파일명을 context명과 동일하게 변경
+ ex) buyinfo.war
+4. tomcat의 webapp 폴더 하위에 war 파일 위치
+5. tomcat의 bin 폴더 하위의 catalina.bat 파일 수정
+ - 아래의 설정 추가 (spring.profiles.active 설정은 개발/운영 서버 여부에 따라 변경적용 필요)
+========================================================================
+ set JAVA_HOME=jdk 설치 경로
+ set CATALINA_HOME=tomcat 경로
+ set CATALINA_OPTS=-Xms128m -Xmx512m -Dspring.profiles.active="dev"
+========================================================================
+6. tomcat 실행
+

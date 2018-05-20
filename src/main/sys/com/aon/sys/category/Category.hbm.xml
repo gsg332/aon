@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-lazy="false">
+	<class name="com.aon.sys.category.Category" table="sa_category">
+		<id name="id" column="category_id" type="java.lang.Long">
+			<generator class="native" />
+		</id>
+		<property name="rootId" column="root_id" type="java.lang.Long" />
+		<property name="parentId" column="parent_id" type="java.lang.Long" />
+		<property name="name" column="category_name" type="string" />
+		<property name="flagCode" column="flag_code" type="int" />
+		<property name="sort" column="sort_order" type="int" />
+		<property name="updateDate" column="update_date" type="java.util.Date" />
+		<property name="className" column="class_name" type="string" />
+	</class>
+	<query name="com.aon.sys.category.Category.allList"><![CDATA[
+		FROM com.aon.sys.category.Category AS c ORDER BY c.sort ASC
+	]]></query>
+	<query name="com.aon.sys.category.listByRootForCache"><![CDATA[
+		FROM com.aon.sys.category.Category AS c WHERE c.rootId =:rootId ORDER BY c.sort ASC
+		]]></query>
+	
+</hibernate-mapping>

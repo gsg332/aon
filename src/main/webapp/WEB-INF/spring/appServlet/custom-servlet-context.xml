@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.springframework.org/schema/beans"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<!-- appliction name은 필수 적인 요소이다.  -->
+	<bean id="appSpring" class="com.aon.lib.app.AppSpring">
+		<property name="applicationName">
+			<value>whatinfo</value>
+		</property>	
+	</bean>
+	<!-- cluster cache를 사용할 경우 applicatio name 과 함께 사용된다. -->
+	<bean id="cacheSpring" class="com.aon.lib.cache.CacheSpring">
+		<property name="clustered">
+			<value>false</value>
+		</property>
+		<property name="user">
+			<value>whatinfouser</value>
+		</property>	
+		<property name="password">
+			<value>rhdqnwhagofk</value>
+		</property>	
+	</bean>
+</beans>

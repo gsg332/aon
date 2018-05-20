@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-lazy="false">
+	<class name="com.aon.module.doc.DocItem" table="doc_item">
+		<id name="id" column="item_id" type="java.lang.Long">
+			<generator class="native"/>
+		</id>
+		<version name="version" column="version" type="int"/>
+	    
+		<property name="content" column="content" type="text"/>
+	    <property name="title" column="title" type="string"/>
+	    <property name="readCount" column="read_count" type="int"/>
+	    <property name="insertDate" column="insert_date" type="java.util.Date"/>
+	   	<property name="updateDate" column="update_date" type="java.util.Date"/>
+	    <property name="groupId" column="group_id" type="java.lang.Long"/>
+		<property name="parentId" column="parent_id" type="java.lang.Long"/>
+		<property name="position" column="position" type="int"/>
+		<property name="step" column="step" type="int"/>
+		<property name="replyCount" column="reply_count" type="int"/>
+		<property name="status" column="status" type="int"/>
+        <property name="visible" column="is_visible" type="boolean"/>
+        <property name="flagCode" column="flag_code" type="int"/>
+        <property name="fileExt" column="file_ext" type="string"/>
+       <component name="registerUser" class="com.aon.sys.usr.User">
+			<property name="memberId" column="member_id" type="java.lang.Long"/>
+			<property name="displayName" column="member_display_name" type="string"/>
+		</component>
+	   
+	    <list name="attachments" inverse="true" lazy="true" >
+			<key column="item_id"/>
+			<index column="sort_order"/>
+			<one-to-many class="com.aon.module.doc.DocItem$Attachment"/>
+		</list> 
+		<list name="categories" table="doc_item_category" lazy="true">
+			<key column="item_id"/>
+			<index column="sort_order"/>
+			<composite-element class="com.aon.module.doc.DocItem$Category">
+				<property name="categoryId" column="category_id" type="java.lang.Long"/>
+				<property name="level1" column="level1" type="java.lang.Long"/>
+				<property name="level2" column="level2" type="java.lang.Long"/>
+				<property name="level3" column="level3" type="java.lang.Long"/>
+				<property name="level4" column="level4" type="java.lang.Long"/>
+			</composite-element>
+		</list>
+
+	</class>
+
+	<class name="com.aon.module.doc.DocItem$Attachment" table="doc_item_file">
+		<id name="id" column="file_id" type="java.lang.Long">
+			<generator class="native"/>
+		</id>
+		<property name="filename" column="file_name" type="string"/>
+		<property name="filesize" column="file_size" type="java.lang.Long"/>
+		<property name="path" column="save_path" type="string"/>
+		<property name="dnldCnt" column="dnld_count" type="int"/>
+		<property name="type" column="save_code" type="integer"/>
+		<many-to-one name="entity" column="item_id" class="com.aon.module.doc.DocItem"/>
+	</class>
+</hibernate-mapping>

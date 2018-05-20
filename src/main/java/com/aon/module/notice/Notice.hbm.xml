@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-lazy="false">
+	<class name="com.aon.module.notice.Notice" table="cm_notice">
+		<id name="id" type="java.lang.Long">
+			<column name="notice_id" length="20">
+				<comment>공지사항일련번호</comment>
+			</column>
+			<generator class="native"/>
+		</id>
+	    <property name="title" type="string">
+            <column name="title" length="500">
+                <comment>제목</comment>
+            </column>
+        </property>
+        <property name="content" type="text">
+            <column name="content">
+                <comment>본문</comment>
+            </column>
+        </property>
+	    <property name="readCount" type="int">
+	    	<column name="read_count" length="10">
+                <comment>조회수</comment>
+            </column>
+        </property>
+	    <property name="insertDate" type="java.util.Date">
+            <column name="insert_date">
+                <comment>등록일시</comment>
+            </column>
+        </property>
+        <property name="updateDate" type="java.util.Date">
+            <column name="update_date">
+                <comment>수정일시</comment>
+            </column>
+        </property>
+        <component name="registerUser" class="com.aon.sys.usr.User">
+	        <property name="memberId" type="java.lang.Long">
+	            <column name="admin_id" length="20">
+	                <comment>회원일련번호</comment>
+	            </column>
+	        </property>
+        </component>
+	</class>
+</hibernate-mapping>

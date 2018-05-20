@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-lazy="false">
+	<class name="com.aon.module.cyberaccount.withdraw.Withdraw" table="pt_withdraw">
+		<id name="id" column="withdraw_id" type="java.lang.Long">
+			<generator class="native"/>
+		</id>
+		<property name="requestPoint" column="request_point" type="java.lang.Long" />
+		<property name="status" column="status" type="int" />
+		<property name="amount" column="amount" type="java.lang.Float" />
+		<property name="fee" column="fee" type="java.lang.Float" />
+		<property name="paypalAccount" column="paypal_account" type="java.lang.String" />
+		<property name="confirmPoint" column="confirm_point" type="java.lang.Long" />
+		<property name="confirmBankCode" column="confirm_bank_code" type="java.lang.String" />
+		<property name="confirmAccountNumber" column="confirm_account_number" type="java.lang.String" />
+		<property name="confirmAccountName" column="confirm_account_name" type="java.lang.String" />
+		<property name="confirmDate" column="confirm_date" type="java.util.Date" />
+		<property name="adminComment" column="admin_comment" type="java.lang.String" />
+		<property name="insertDate" column="insert_date" type="java.util.Date" />
+		<property name="updateDate" column="update_date" type="java.util.Date" />
+		<property name="certifyId" column="certify_id" type="java.lang.Long" />
+		<property name="bankAccId" column="bank_acc_id" type="java.lang.Long" />
+		<property name="adminId" column="admin_id" type="java.lang.Long" />
+		<property name="cyberAccId" column="cyber_acc_id" type="java.lang.Long" />
+	</class>
+</hibernate-mapping>

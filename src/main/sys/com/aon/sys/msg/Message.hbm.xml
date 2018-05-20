@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-lazy="false">
+	<class name="com.aon.sys.msg.Message" table="sa_message">
+		<id name="id" column="message_id" type="java.lang.Long">
+			<generator class="native" />
+		</id>
+		<component name="sender" class="com.aon.sys.usr.User">
+			<property name="memberId" column="sender_member_id" type="java.lang.Long"/>
+			<property name="displayName" column="sender_member_display_name" type="string"/>
+		</component>
+		<property name="sendedDate" column="sended_date" type="java.util.Date"/>
+		<property name="updateDate" column="update_date" type="java.util.Date"/>
+		<property name="content" column="content" type="text"/>
+		<property name="receiverCount" column="receiver_count" type="int"/>
+		<property name="readCount" column="read_count" type="int"/>
+							
+		<list name="receivers" table="sa_message_receiver" lazy="true">
+			<key column="message_id"  />
+			<index column="sort_order"/>
+			<composite-element class="com.aon.sys.msg.Message$Receiver">
+				<property name="memberId" column="member_id" type="java.lang.Long"/>
+				<property name="displayName" column="member_display_name" type="string"/>
+				<property name="receiveDate" column="receive_date" type="java.util.Date"/>
+				<property name="deleted" column="is_deleted" type="boolean"/>
+				<property name="notified" column="is_notified" type="boolean"/>
+			</composite-element>
+		</list>
+	</class>
+</hibernate-mapping>

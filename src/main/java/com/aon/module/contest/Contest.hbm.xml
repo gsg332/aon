@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-lazy="false">
+	<class name="com.aon.module.contest.Contest" table="qa_item">
+		<id name="id" column="qa_id" type="java.lang.Long">
+			<generator class="native"/>
+		</id>
+		<property name="groupId" column="group_id" type="java.lang.Long"/>
+		<property name="answerGroupId" column="answer_group_id" type="java.lang.Long"/>
+		<property name="parentId" column="parent_id" type="java.lang.Long"/>
+		<property name="step" column="step" type="int"/>
+		<property name="position" column="position" type="int"/>
+	    <property name="title" column="title" type="string"/>
+	    <property name="content" column="content" type="text"/>
+	    <property name="readCount" column="read_count" type="int"/>
+	    <property name="replyCount" column="reply_count" type="int"/>
+	    <property name="point" column="point" type="java.lang.Long"/>
+	    <property name="gradePoint" column="grade_point" type="int"/>
+	    <property name="status" column="status" type="int"/>
+	    <property name="cancelReason" column="cancel_reason" type="string"/>
+	    <property name="choose" column="is_choose" type="boolean"/>
+	    <property name="read" column="is_read" type="boolean"/>
+	    <property name="favorite" column="is_favorite" type="boolean"/>
+	    <property name="insertDate" column="insert_date" type="java.util.Date"/>
+	    <property name="expireDate" column="expire_date" type="java.util.Date"/>
+	    <property name="updateDate" column="update_date" type="java.util.Date"/>
+	    <property name="chooseCount" column="choose_count" type="int"/>
+	    <property name="shareType" column="share_type" type="int"/>
+	    <property name="pointRatio" column="point_ratio" type="string"/>
+	    <component name="registerUser" class="com.aon.sys.usr.User">
+			<property name="memberId" column="member_id" type="java.lang.Long"/>
+			<property name="displayName" column="member_display_name" type="string"/>
+		</component>
+		<component name="adminUser" class="com.aon.sys.usr.User">
+			<property name="memberId" column="admin_id" type="java.lang.Long"/>
+		</component>
+		
+		<list name="attachments" inverse="true" lazy="true">
+			<key column="qa_id"/>
+			<index column="sort_order"/>
+			<one-to-many class="com.aon.module.contest.Contest$Attachment"/>
+		</list>
+		
+		<list name="categories" table="qa_item_category" lazy="true">
+			<key column="qa_id"/>
+			<index column="sort_order"/>
+			<composite-element class="com.aon.module.contest.Contest$Category">
+				<property name="categoryId" column="category_id" type="java.lang.Long"/>
+				<property name="level1" column="level1" type="java.lang.Long"/>
+				<property name="level2" column="level2" type="java.lang.Long"/>
+				<property name="level3" column="level3" type="java.lang.Long"/>
+				<property name="level4" column="level4" type="java.lang.Long"/>
+				<property name="tag" column="tag" type="string"/>
+			</composite-element>
+		</list>
+		
+		<list name="points" table="qa_item_point" lazy="true">
+			<key column="qa_id"/>
+			<index column="rank"/>
+			<composite-element class="com.aon.module.contest.Contest$Points">
+				<property name="answerId" column="answer_id" type="java.lang.Long"/>
+				<property name="pointRatio" column="point_ratio" type="int"/>
+				<property name="point" column="point" type="java.lang.Long"/>
+				<property name="insertDate" column="insert_date" type="java.util.Date"/>
+				<property name="updateDate" column="update_date" type="java.util.Date"/>
+			</composite-element>
+		</list>
+	</class>
+
+	<class name="com.aon.module.contest.Contest$Attachment" table="qa_item_file">
+		<id name="id" column="file_id" type="java.lang.Long">
+			<generator class="native"/>
+		</id>
+		<property name="filename" column="file_name" type="string"/>
+		<property name="filesize" column="file_size" type="java.lang.Long"/>
+		<property name="path" column="save_path" type="string"/>
+		<property name="dnldCnt" column="dnld_count" type="int"/>
+		<property name="type" column="save_code" type="integer"/>
+		<many-to-one name="entity" column="qa_id" class="com.aon.module.contest.Contest"/>
+	</class>
+	
+</hibernate-mapping>

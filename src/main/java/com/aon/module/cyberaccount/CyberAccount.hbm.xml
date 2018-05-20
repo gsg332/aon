@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-lazy="false">
+	<class name="com.aon.module.cyberaccount.CyberAccount" table="hr_cyber_account">
+		<id name="id" column="cyber_acc_id" type="java.lang.Long">
+			<generator class="native"/>
+		</id>
+		<property name="cyberAccNumber" column="cyber_acc_number" type="java.lang.String"/>
+		<property name="depositSum" column="deposit_sum" type="java.lang.Long" />
+		<property name="withdrawSum" column="withdraw_sum" type="java.lang.Long" />
+		<property name="chooseSum" column="choose_sum" type="java.lang.Long" />
+ 		<property name="memberId" column="member_id" type="java.lang.Long" />
+	</class>
+</hibernate-mapping>

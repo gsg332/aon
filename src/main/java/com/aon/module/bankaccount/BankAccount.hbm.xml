@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-lazy="false">
+	<class name="com.aon.module.bankaccount.BankAccount" table="hr_bank_account">
+		<id name="id" column="bank_acc_id" type="java.lang.Long">
+			<generator class="native"/>
+		</id>
+        <property name="bankCode" column="bank_code" type="string" not-null="true"/>
+        <property name="accountNumber" column="account_number" type="string" not-null="true"/>
+        <property name="accountName" column="account_name" type="string" not-null="true"/>
+        <property name="insertDate" column="insert_date" type="java.util.Date"/>
+        <property name="memberId" column="member_id" type="java.lang.Long"/>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8"/>
+        <title>$emailTitle</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    </head>
+    <body>
+	    <table style="width: 750px; margin: 0; padding: 0;">
+			<thead style="background-color: #353f49;">
+				<tr>
+					<td align="left" style="padding: 9px; line-height: normal;"><img src="https://www.whatinfoaon.com//resources/images/mail/logo.png" alt="WHATINFO" border="0" ></td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td align="left" style="padding: 30px 35px;">
+						<h2 style="color: #758395; font-size: 18px; font-weight: 600;">$emailTitle</h2>
+						<p style="color: #e7505a;font-size: 13px;line-height: normal">$emailReJoin</p>
+						<p style="margin:0 padding:0;font-size:13px;line-height:normal;">
+							$emailContent</p>
+						<a href="$authUrl" color="white" style="display:block; margin:20px 0; text-decoration: none;"><p align="center" style="display: block; width:100%; padding:6px 12px; font-size:14px; line-height:normal; color:#fff; background-color:#337ab7;">$emailConfirmBtn</p></a>						
+					</td>
+				</tr>
+				<tr>
+					<td align="center" style="padding:20px; font-size:12px; background-color: #b0b4bb;">
+						<p style="color:#fff;margin:0 padding:0;">$phone</p>
+						<p style="font-size:11px;color:#dfe1e4;margin:0 padding:0;">$address</p>
+						<!-- display none -->
+						<p style="display:none;">
+							<a href="#"><img src="https://www.whatinfoaon.com//resources/images/mail/icon_facebook.png" alt="facebook" border="0" ></a>
+							<a href="#"><img src="https://www.whatinfoaon.com//resources/images/mail/icon_twitter.png" alt="facebook" border="0" ></a>
+							<a href="#"><img src="https://www.whatinfoaon.com//resources/images/mail/icon_instagram.png" alt="facebook" border="0" ></a>
+						</p>
+						<!-- //display none -->
+						<p style="color:#dfe1e4;clear:both;margin:0 padding:0;">Copyright BuyInfo All rights reserved.</p>						
+					</td>
+				</tr>
+			</tbody>
+		</table>
+    </body>
+</html>

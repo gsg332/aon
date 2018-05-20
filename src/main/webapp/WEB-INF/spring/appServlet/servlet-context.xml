@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.2.xsd">
+
+		<context:component-scan base-package="com.aon" />
+		<task:annotation-driven />
+		
+		<!-- messages -->
+		<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+			<property name="basenames">
+				<util:list>
+					<value>classpath:messages/messages</value>
+					<value>classpath:messages/docitem/docitem</value>
+					<value>classpath:messages/contest/contest</value>
+					<value>classpath:messages/notice/notice</value>
+					<value>classpath:messages/onlineask/onlineask</value>
+					<value>classpath:messages/email/email</value>
+					<value>classpath:messages/member/member</value>
+					<value>classpath:messages/point/point</value>
+					<value>classpath:messages/category/category</value>
+					<value>classpath:messages/survey/survey</value>
+				</util:list>
+			</property>
+			<property name="defaultEncoding" value="UTF-8" />
+			<property name="cacheSeconds" value="180" />
+		</bean>
+		<!-- /messages -->
+
+		
+		<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+			<property name="defaultLocale" value="en_US" />
+		</bean>
+
+		<!-- interceptors -->
+
+
+	<mvc:interceptors>
+		<bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+				<property name="paramName" value="lang"></property>
+		</bean>
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<bean class="com.aon.sys.usr.UserSessionInterceptor" />
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<bean class="com.aon.lib.http.MultipartInterceptor" />
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<bean class="com.aon.lib.json.JsonViewInterceptor" />
+		</mvc:interceptor>
+		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<mvc:exclude-mapping path="/resources/**" />
+			<bean id="responseInterceptor" class="com.aon.lib.http.ResponseIntetceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
+	
+	<mvc:resources mapping="/resources/**" location="/resources/" />
+	<mvc:annotation-driven conversion-service="conversionService">
+		<mvc:argument-resolvers>
+			<ref bean="sortResolver" />
+			<ref bean="pageableResolver" />
+		</mvc:argument-resolvers><!-- <mvc:message-converters> <bean class="com.aon.lib.json.JsonResponseAwareJsonMessageConverter" 
+			/> </mvc:message-converters> -->
+	</mvc:annotation-driven>
+
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
+		in the /WEB-INF/views directory -->
+	<bean
+		class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+		<property name="viewResolvers">
+			<list>
+				<bean class="org.springframework.web.servlet.view.BeanNameViewResolver" />
+				<bean
+					class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+					<property name="prefix" value="/WEB-INF/views/" />
+					<property name="suffix" value=".jsp" />
+				</bean>
+			</list>
+		</property>
+		<property name="defaultViews">
+			<list>
+				<bean
+					class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
+					<property name="disableCaching" value="true" />
+					<property name="objectMapper">
+						<bean
+							class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean"
+							p:failOnEmptyBeans="false" p:indentOutput="true"
+							p:defaultViewInclusion="false" p:autoDetectFields="false"
+							p:autoDetectGettersSetters="false">
+							<property name="serializers">
+								<array>
+									<bean class="com.aon.lib.json.JsonQPathSerializer"/>
+								</array>
+							</property>
+						</bean>
+					</property>
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	
+	
+	<bean id="urlViewController"
+		class="org.springframework.web.servlet.mvc.UrlFilenameViewController">
+	</bean>
+
+	<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<value>
+				/**/*.aon=urlViewController
+			</value>
+		</property>
+	</bean>
+
+
+	<bean id="conversionService"
+		class="org.springframework.format.support.FormattingConversionServiceFactoryBean" >
+		<property name="converters">
+        <list>
+            <bean class="com.aon.lib.json.StringToDateConverter" />
+        </list>
+    </property>
+	</bean>
+	<bean
+		class="org.springframework.data.repository.support.DomainClassConverter">
+		<constructor-arg ref="conversionService" />
+	</bean>
+	
+	<!--  page size 및 페이지 번호를 1부터 처리 ,Spring 에서는 첫페이지가 0이다. -->
+
+	<bean id="sortResolver"
+		class="org.springframework.data.web.SortHandlerMethodArgumentResolver" />
+	<bean id="pageableResolver"
+		class="org.springframework.data.web.PageableHandlerMethodArgumentResolver">
+		<constructor-arg ref="sortResolver" />
+		<property name="oneIndexedParameters" value="true" />
+		<property name="fallbackPageable">
+			<bean class="org.springframework.data.domain.PageRequest">
+				<constructor-arg name="page" value="0" />
+				<constructor-arg name="size" value="10" /> 
+			</bean>
+		</property>
+	</bean>
+ 	
+	<!-- 첨부파일 -->
+	<bean id="MultipartRepository" class="com.aon.lib.http.MultipartRepository" />
+	<bean id="FileRepository" class="com.aon.lib.repo.FileRepository">
+		<property name="width">
+			<value>10</value>
+		</property>
+		<property name="depth">
+			<value>3</value>
+		</property>
+		<property name="root">
+			<value>/repository</value>
+		</property>
+	</bean>
+	<bean id="TemporaryFileRepository" class="com.aon.lib.repo.TemporaryFileRepository" />
+	<bean id="repo" class="com.aon.lib.repo.RepositorySpring">
+		<property name="repositories">
+			<map>
+				<entry key="1">
+					<ref bean="MultipartRepository" />
+				</entry>
+				<entry key="1000">
+					<ref bean="FileRepository" />
+				</entry>
+				<entry key="1100">
+					<ref bean="TemporaryFileRepository" />
+				</entry>
+			</map>
+		</property>
+		<property name="defaultRepositoryType">
+			<value>1000</value>
+		</property>
+	</bean>
+	
+	<bean id="appSpring" class="com.aon.lib.app.AppSpring">
+		<property name="applicationName">
+			<value>aon</value>
+		</property>	
+	</bean>
+	<bean id="cacheSpring" class="com.aon.lib.cache.CacheSpring">
+		<property name="clustered">
+			<value>false</value>
+		</property>
+		<property name="user">
+			<value>aon</value>
+		</property>	
+		<property name="password">
+			<value>rhdqnwhagofk</value>
+		</property>	
+	</bean>
+	
+	<bean id="internationalization" class="com.aon.lib.i18n.I18N">
+		<property name="locales">
+			<list>
+				<value>ko_KR</value>
+				<value>en_US</value>
+			</list>
+		</property>
+		<property name="defaultLocale">
+			<value>en_US</value>
+		</property>
+	</bean>
+
+	<bean id="categoryRoot" class="com.aon.sys.category.Category">
+		<property name="categoryRoot">
+			<map>
+				<entry key="whatinfo" value="1" />
+			</map>
+		</property>
+	</bean>
+	
+	<beans profile="dev">
+		<bean id="paypalSpring" class="com.aon.module.paypal.PaypalSpring">
+			<property name="paymentUrl" value="https://www.sandbox.paypal.com/cgi-bin/webscr"/>
+			<property name="businessEmail" value="pmin-facilitator@wnwcapital.com"/>
+			<property name="businessToken" value="bTtaTGWlxn9qIltdlJzpjXfqDLgjB5vwKnyFr8PlrKY53fVFzheJWxRO8eG"/>
+		</bean>
+	</beans>
+	<beans profile="prod">
+		<bean id="paypalSpring" class="com.aon.module.paypal.PaypalSpring">
+			<property name="paymentUrl" value="https://www.paypal.com/cgi-bin/webscr"/>
+			<property name="businessEmail" value="pmin@wnwcapital.com"/>
+			<property name="businessToken" value="DRE4ZBuwA8aFCUKwGYA8Y81ccjwqMUFkFAm2xRq0OFQ6pC9JF_ilPdAofPm"/>	
+		</bean>
+	</beans>
+
+</beans>

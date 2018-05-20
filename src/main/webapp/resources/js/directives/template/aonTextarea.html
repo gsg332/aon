@@ -1,0 +1,9 @@
+ <div class="form-group" ng-class="{ 'has-error' : form[fieldName].$invalid }">
+   <label for="{{fieldName}}">{{label}}</label>
+   <textarea rows="3" class="form-control" 
+          ng-model="value" ng-required="{{required}}"
+   		  name="{{fieldName}}" placeholder="{{placeholder}}"></textarea>
+     <p class="help-block" ng-show="form[fieldName].$invalid && form[fieldName].$touched">
+      		{{alertMessage}}
+     </p>
+</div> 

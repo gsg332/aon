@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+    <persistence-unit name="spring-jpa">
+    <provider>org.hibernate.ejb.HibernatePersistence</provider>
+   	 <exclude-unlisted-classes/><!--  자동화 하지 않고 수동으로 정의 할수 있다. 
+   	 	<mapping-file>com/aon/sys/certify/sms/SmsCertify.hbm.xml</mapping-file>
+		<mapping-file>com/aon/sys/schedule/log/SysLog.hbm.xml</mapping-file>
+		<mapping-file>com/aon/module/contest/Contest.hbm.xml</mapping-file>
+		<mapping-file>com/aon/module/cyberaccount/CyberAccount.hbm.xml</mapping-file>
+		<mapping-file>com/aon/module/doc/DocItem.hbm.xml</mapping-file>
+		<mapping-file>com/aon/module/cyberaccount/point/Point.hbm.xml</mapping-file>
+		<mapping-file>com/aon/module/cyberaccount/withdraw/Withdraw.hbm.xml</mapping-file>
+		<mapping-file>com/aon/sys/category/Category.hbm.xml</mapping-file>
+		<mapping-file>com/aon/sys/lock/Lock.hbm.xml</mapping-file>
+		<mapping-file>com/aon/module/notice/Notice.hbm.xml</mapping-file>
+		<mapping-file>com/aon/sys/member/Member.hbm.xml</mapping-file>
+		<mapping-file>com/aon/module/cyberaccount/deposit/Deposit.hbm.xml</mapping-file>
+		<mapping-file>com/aon/sys/schedule/Schedule.hbm.xml</mapping-file>
+		<mapping-file>com/aon/module/onlineask/OnlineAsk.hbm.xml</mapping-file>-->
+    </persistence-unit>
+</persistence>

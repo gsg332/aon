@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<!-- Maria DB config -->
+	<!--  
+	<entry key="jdbc.driver">org.mariadb.jdbc.Driver</entry>
+	<entry key="jdbc.url">jdbc:mysql://10.1.1.187/whatinfo</entry>
+	<entry key="jdbc.username">whatinfo</entry>
+	<entry key="jdbc.password">dhktdlsvhelql!!</entry>
+   -->
+	<!-- //jdbc config -->
+	
+	<!-- Mongo DB config -->
+	<entry key="mongo.host">10.1.1.187</entry>
+	<entry key="mongo.port">27017</entry>
+	<entry key="mongo.credentials">aonuser:aonpwd@AonDB</entry>
+	<entry key="mongo.databaseName">AonDB</entry>
+	<!-- //jdbc config -->
+	
+</properties>

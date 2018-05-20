@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-lazy="false">
+	<class name="com.aon.module.cyberaccount.deposit.Deposit" table="pt_deposit">
+		<id name="id" column="deposit_id" type="java.lang.Long">
+			<generator class="native" />
+		</id>
+		<property name="requestPoint" column="request_point" type="java.lang.Long" />
+		<property name="requestAccountName" column="request_account_name" type="string" />
+		<property name="requestDate" column="request_date" type="java.util.Date" />
+		<property name="status" column="status" type="int" />
+		<property name="paymentStatus" column="payment_status" type="int" />
+		<property name="paymentId" column="payment_id" type="string" />
+		<property name="payerEmail" column="payer_email" type="string" />
+		<property name="paymentDate" column="payment_date" type="string" />
+		<property name="paymentFee" column="payment_fee" type="java.lang.Float" />
+		<property name="amount" column="amount" type="java.lang.Float" />
+		<property name="confirmPoint" column="confirm_point" type="java.lang.Long" />
+		<property name="confirmAccountName" column="confirm_account_name" type="string" />
+		<property name="confirmDate" column="confirm_date" type="java.util.Date" />
+		<property name="adminComment" column="admin_comment" type="string" />
+		<property name="insertDate" column="insert_date" type="java.util.Date" />
+		<property name="updateDate" column="update_date" type="java.util.Date" />
+		<property name="cyberAccId" column="cyber_acc_id" type="java.lang.Long" />
+		<property name="adminId" column="admin_id" type="java.lang.Long" />
+	</class>
+</hibernate-mapping>

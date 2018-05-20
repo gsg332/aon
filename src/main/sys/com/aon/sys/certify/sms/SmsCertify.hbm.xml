@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-lazy="false">
+	<class name="com.aon.sys.certify.sms.SmsCertify" table="sa_sms_certify">
+		<id name="id" column="certify_id" type="java.lang.Long">
+			<generator class="native"/>
+		</id>
+		<property name="cellPhoneCountryCode" column="cell_phone_country_code" type="java.lang.String"/>
+		<property name="cellPhoneNumber" column="cell_phone_number" type="java.lang.String"/>
+		<property name="certifyNumber" column="certify_number" type="java.lang.String"/>
+		<property name="resultCode" column="result_code" type="int"/>
+		<property name="insertDate" column="insert_date" type="java.util.Date"/>
+		<property name="memberId" column="member_id" type="java.lang.Long"/>
+	</class>
+</hibernate-mapping>

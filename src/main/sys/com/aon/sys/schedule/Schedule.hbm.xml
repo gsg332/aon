@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-lazy="false">
+	<class name="com.aon.sys.schedule.Schedule" table="sa_schedule">
+		<id name="id" column="schedule_id" type="java.lang.Long">
+			<generator class="native"/>
+		</id>
+		<property name="className" column="schedule_name" type="string"/>
+		<property name="param" column="param" type="string"/>
+		<property name="result" column="result_code" type="integer"/>
+		<property name="paused" column="is_paused" type="boolean"/>
+		<property name="insertDate" column="insert_date" type="java.util.Date"/>
+		<property name="runDate" column="run_date" type="java.util.Date"/>
+		<property name="cron" column="cron" type="string"/>
+		<property name="interval" column="period" type="long"/>
+	</class>
+	<query name="com.aon.sys.schedule.Schedule.selectRecent"><![CDATA[
+		FROM Schedule AS j
+		WHERE j.result != 1000 AND j.runDate <= :sysdate AND j.runDate IS NOT NULL AND j.paused = 0
+		ORDER BY j.runDate
+	]]></query>
+</hibernate-mapping>
